@@ -1,0 +1,6 @@
+.component-board {
+    border: 1px solid red;
+    background-color: blueviolet;
+    width: 100%;
+    height: 100%;
+}

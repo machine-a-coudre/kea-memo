@@ -1,5 +1,6 @@
 const path = require("path");
 const webpack = require("webpack");
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
     entry: "./src/index.js",
@@ -19,15 +20,18 @@ module.exports = {
         ]
     },
     resolve: {
-        extensions: ["*", ".js", ".jsx"]
+        extensions: ["*", ".js", ".jsx", ".scss"]
     },
     output: {
-        path: path.resolve(__dirname, "dist/"),
-        publicPath: "/dist/",
-        filename: "bundle.js"
+        path: path.resolve(__dirname, "dist"),
+        publicPath: "/",
+        filename: "[name].bundle.js"
     },
     devServer: {
         historyApiFallback: true,
     },
-    plugins: [new webpack.HotModuleReplacementPlugin()]
+    plugins: [
+        new HtmlWebpackPlugin({ template: './public/index.html' }),
+        new webpack.HotModuleReplacementPlugin(),
+    ],
 };
