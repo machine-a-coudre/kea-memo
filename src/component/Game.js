@@ -8,7 +8,10 @@ export default class Game extends React.Component {
 
         return (
             <div className={ className.join(" ") }>
-                <Board />
+                <div className="component-game--inner" >
+                    <h1>Kea Memory</h1>
+                    <Board difficultyLvl={ 4 } />
+                </div>
             </div>
         );
     }
