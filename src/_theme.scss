@@ -2,8 +2,18 @@
 /* Thème    */
 /* ********* */
 
-:root {
-    --kea-color-blue: #57d1f2;
-    --kea-color-lightgrey: #eee;
-    --kea-color-white: #fff;
+.theme--kea {
+    .component-card,
+    .component-card--back,
+    .component-card--front {
+        //border-radius: 5px;
+    }
+}
+
+.theme--kea-rounded {
+    .component-card,
+    .component-card--back,
+    .component-card--front {
+        border-radius: 100%;
+    }
 }

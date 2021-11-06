@@ -16,7 +16,7 @@ export default class Board extends React.Component {
             gameStarted: false, 
             gameMessage: "Start the game: click on a card.",
             gamerTurn: 1,
-            gamersScores: [ 0 ]
+            gamersScores: Array(props.nbPlayers).fill(0)
         };
 
         this.reversedCard = [];
@@ -86,17 +86,21 @@ export default class Board extends React.Component {
                             board.reversedCard = [];
                         }
 
-                        let newScore = board.state.gamersScores[ 0 ];
-                        newScore++;
-
+                        let gamersScores = board.state.gamersScores;
+                        gamersScores[ board.state.gamerTurn - 1 ]++;
+                        
                         // Update gamer score
-                        board.setState({ gamersScores: [ newScore ] })
+                        board.setState({ gamersScores: gamersScores })
 
                         board.addTimeout(() => {
                             board.setState({ gameMessage: board.checkWinner() ? "Well done!" : "Click on a card." })
                         });
                     } else {
-                        board.setState({ gameMessage: "Oh no! Try again..." });
+                        // Update gamer turn
+                        board.setState({ 
+                            gameMessage: "Oh no! Try again...",
+                            gamerTurn: (board.state.gamerTurn + 1 > this.props.nbPlayers) ? 1 : board.state.gamerTurn + 1
+                        });
 
                         // Not same value, revert cards
                         board.addTimeout(() => {
@@ -128,7 +132,7 @@ export default class Board extends React.Component {
             gameStarted: false, 
             gameMessage: "Start the game: click on a card.",
             gamerTurn: 1,
-            gamersScores: [ 0 ],
+            gamersScores: Array(this.props.nbPlayers).fill(0),
         });
     }
     
@@ -198,7 +202,7 @@ export default class Board extends React.Component {
                     <div>{ cards }</div>
                 </div>
                 <div className="component-game--status">{ this.state.gameMessage }</div>
-                <div>Score: { this.state.gamersScores[ 0 ] }</div>
+                <div>Gamer { this.state.gamerTurn } - Score: { this.state.gamersScores[this.state.gamerTurn -1] }</div>
                 <div>
                     <button className="component-game--btn-playgame" onClick={ this.playGame }>Play again</button>
                 </div>
