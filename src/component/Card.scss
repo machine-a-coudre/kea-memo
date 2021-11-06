@@ -32,7 +32,7 @@
 .component-card--back,
 .component-card--front {
     align-items: center;
-    background-color: white;
+    background-color: var(--kea-color-white);
     border-radius: 5px;
     display: flex;
     height: 100%;
@@ -42,6 +42,6 @@
 }
 
 .component-card--back {
-    background-color: #57d1f2;
+    background-color: var(--kea-color-blue);
     background-image: url(./../../public/assets/images/64512_parrot_icon.png);
 }
