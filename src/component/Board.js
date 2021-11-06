@@ -10,7 +10,15 @@ export default class Board extends React.Component {
     constructor(props) {
         super(props);
 
-        this.state = { cards: [], distinctValue: [], gameStarted: false, gameMessage: "Start the game: click on a card." };
+        this.state = { 
+            cards: [], 
+            distinctValue: [], 
+            gameStarted: false, 
+            gameMessage: "Start the game: click on a card.",
+            gamerTurn: 1,
+            gamersScores: [ 0 ]
+        };
+
         this.reversedCard = [];
         this.foundCard = [];
         this.timeoutIDs = [];
@@ -78,6 +86,12 @@ export default class Board extends React.Component {
                             board.reversedCard = [];
                         }
 
+                        let newScore = board.state.gamersScores[ 0 ];
+                        newScore++;
+
+                        // Update gamer score
+                        board.setState({ gamersScores: [ newScore ] })
+
                         board.addTimeout(() => {
                             board.setState({ gameMessage: board.checkWinner() ? "Well done!" : "Click on a card." })
                         });
@@ -108,7 +122,14 @@ export default class Board extends React.Component {
     playGame = () => {
         this.clearAll();
         this.newGame = true;
-        this.setState({ cards: [], distinctValue: [], gameStarted: false, gameMessage: "Start the game: click on a card." });
+        this.setState({ 
+            cards: [], 
+            distinctValue: [], 
+            gameStarted: false, 
+            gameMessage: "Start the game: click on a card.",
+            gamerTurn: 1,
+            gamersScores: [ 0 ],
+        });
     }
     
     /**
@@ -177,6 +198,7 @@ export default class Board extends React.Component {
                     <div>{ cards }</div>
                 </div>
                 <div className="component-game--status">{ this.state.gameMessage }</div>
+                <div>Score: { this.state.gamersScores[ 0 ] }</div>
                 <div>
                     <button className="component-game--btn-playgame" onClick={ this.playGame }>Play again</button>
                 </div>

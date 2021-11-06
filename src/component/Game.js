@@ -8,7 +8,7 @@ export default class Game extends React.Component {
             <div className="component-game">
                 <div className="component-game--inner" >
                     <h1>Kea Memory</h1>
-                    <Board difficultyLvl={ 15 } game="this" />
+                    <Board difficultyLvl={ 2 } nbPlayers={ 3 } game="this" />
                 </div>
             </div>
         );
