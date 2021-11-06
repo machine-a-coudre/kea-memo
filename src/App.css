@@ -3,7 +3,7 @@
     src: url("./../public/fonts/HennyPenny-Regular.ttf") format("woff2");
 }
 
-.App {
+.Kea {
     font-family: Arial, Helvetica, sans-serif;
 }
 
@@ -13,4 +13,8 @@ h1, h2, h3, h4, h5 {
 
 h1 {
     font-size: 5rem;
+}
+
+button:hover {
+    cursor: pointer;
 }

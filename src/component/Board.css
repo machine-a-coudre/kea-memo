@@ -13,3 +13,7 @@
     flex-wrap: wrap;
     justify-content: center;
 }
+
+.component-game--btn-playgame {
+    margin: 1.5rem auto;
+}

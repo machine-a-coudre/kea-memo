@@ -13,8 +13,37 @@ export default class Board extends React.Component {
         this.state = { cards: [], distinctValue: [], gameStarted: false, gameMessage: "Start the game: click on a card." };
         this.reversedCard = [];
         this.foundCard = [];
+        this.timeoutIDs = [];
         this.newGame = true;
     }
+
+    /**
+     * Clear timers
+     */
+    componentWillUnmount = this.clearAll;
+
+    /**
+     * Clear timers and cards
+     */
+    clearAll = () => {
+        this.timeoutIDs.map((timeoutID) => window.clearTimeout(timeoutID));
+        this.timeoutIDs = [];
+        this.reversedCard = [];
+        this.foundCard = [];
+    }
+
+    /**
+     * Check if all cards returned meaning all cards have been found
+     * 
+     * @returns bool
+     */
+    checkWinner = () => {
+        const board = this;
+
+        return board.foundCard.length === board.state.cards.length;
+    }
+
+    addTimeout = (fn) => { this.timeoutIDs.push(setTimeout(fn, 1000)) }
     
     /**
      *  Handler on update card
@@ -45,23 +74,25 @@ export default class Board extends React.Component {
                         board.foundCard = [ reversedCard[ 1 ], reversedCard[ 0 ], ... board.foundCard ];
 
                         // Reset reversedCards
-                        if (board.foundCard.length < board.state.cards.length) {
+                        if (!board.checkWinner()) {
                             board.reversedCard = [];
-
-                            setTimeout(() => { board.setState({ gameMessage: "Click on a card." }) }, 1000);
                         }
+
+                        board.addTimeout(() => {
+                            board.setState({ gameMessage: board.checkWinner() ? "Well done!" : "Click on a card." })
+                        });
                     } else {
                         board.setState({ gameMessage: "Oh no! Try again..." });
 
                         // Not same value, revert cards
-                        setTimeout(() => {
+                        board.addTimeout(() => {
                             reversedCard.map((_card) => { _card.toggleStateReverse() });
 
                             // Reset reversedCards
                             board.reversedCard = [];
 
                             board.setState({ gameMessage: "Click on a card." });
-                        }, 1000);
+                        });
                     }
                 }
                 
@@ -72,6 +103,12 @@ export default class Board extends React.Component {
 
             board.setState({ gameStarted: true });
         });
+    }
+
+    playGame = () => {
+        this.clearAll();
+        this.newGame = true;
+        this.setState({ cards: [], distinctValue: [], gameStarted: false, gameMessage: "Start the game: click on a card." });
     }
     
     /**
@@ -140,6 +177,9 @@ export default class Board extends React.Component {
                     <div>{ cards }</div>
                 </div>
                 <div className="component-game--status">{ this.state.gameMessage }</div>
+                <div>
+                    <button className="component-game--btn-playgame" onClick={ this.playGame }>Play again</button>
+                </div>
             </>
         );
     }
