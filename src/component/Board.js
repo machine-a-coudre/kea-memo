@@ -1,6 +1,6 @@
 import React from "react";
-import "./Board.css";
 import Card from "./Card";
+import "./Board.scss";
 
 export default class Board extends React.Component {
     /**

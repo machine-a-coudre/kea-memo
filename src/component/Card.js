@@ -1,5 +1,5 @@
 import React from "react";
-import "./Card.css";
+import "./Card.scss";
 
 function getRandomArbitrary(min, max) {
     return (Math.random() * (max - min)) + min;

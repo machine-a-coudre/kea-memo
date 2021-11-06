@@ -1,0 +1,47 @@
+.component-card {
+    border-radius: 5px;
+    cursor: pointer;
+    height: 100px;
+    margin: 5px;
+    position: relative;
+    width: 100px;
+
+    .component-card--inner {
+        height: 100%;
+        position: absolute;
+        transition: transform 0.4s;
+        transform-style: preserve-3d;
+        width: 100%;
+    }
+
+    &.reversed {
+        .component-card--inner {
+            transform: rotateY(180deg);
+        }
+
+        .component-card--front {
+            display: none;
+        }
+    }
+
+    &:not(.reversed) .component-card--back {
+        display: none;
+    }
+}
+
+.component-card--back,
+.component-card--front {
+    align-items: center;
+    background-color: white;
+    border-radius: 5px;
+    display: flex;
+    height: 100%;
+    justify-content: center;
+    position: absolute;
+    width: 100%;
+}
+
+.component-card--back {
+    background-color: #57d1f2;
+    background-image: url(./../../public/images/64512_parrot_icon.png);
+}

@@ -6,12 +6,12 @@
     width: 100%;
     height: 100%;
     max-width: 800px;
-}
 
-.component-board > div {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
+    > div {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
 }
 
 .component-game--btn-playgame {
