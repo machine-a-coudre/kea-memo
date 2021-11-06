@@ -1,4 +1,6 @@
-@import url(_variables.scss);
+@import "./variables";
+@import "./mixins";
+
 @font-face {
     font-family: "Henny Penny";
     src: url("./../public/assets/fonts/HennyPenny-Regular.ttf") format("woff2");
@@ -13,7 +15,7 @@ h1, h2, h3, h4, h5 {
 }
 
 h1 {
-    font-size: 5rem;
+    font-size: 4rem;
 }
 
 button:hover {

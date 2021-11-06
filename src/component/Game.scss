@@ -1,17 +1,16 @@
+@import "./../mixins";
+
 .component-game {
     height: 100vh;
     width: 100vw;
-    overflow: hidden;
+    overflow-x: hidden;
     background-color: var(--kea-color-lightgrey);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-wrap: wrap;
-    text-align: center;
+
+    @include mx-flex-align-center;
 }
 
 .component-game--inner {
-    padding: 5rem;
+    padding: 1rem;
 }
 
 .component-game--status {

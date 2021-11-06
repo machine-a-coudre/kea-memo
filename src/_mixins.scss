@@ -1,0 +1,11 @@
+/* ********* */
+/* Mixins    */
+/* ********* */
+
+@mixin mx-flex-align-center {
+    align-items: center;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    text-align: center;
+}
