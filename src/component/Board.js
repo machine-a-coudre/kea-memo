@@ -43,13 +43,12 @@ export default class Board extends React.Component {
     /**
      * Check if all cards returned meaning all cards have been found
      * 
-     * @returns bool
+     * @returns ?bool
      */
-    checkWinner = () => {
-        const board = this;
-
-        return board.foundCard.length === board.state.cards.length;
-    }
+    checkWinner = () => 
+        this.foundCard.length === this.state.cards.length ? 
+            this.state.gamersScores.reduce((acc, current, index, arr) => arr[ acc ] < current ? index : acc, 0) + 1 
+                : null;
 
     addTimeout = (fn) => { this.timeoutIDs.push(setTimeout(fn, 1000)) }
     
@@ -79,10 +78,12 @@ export default class Board extends React.Component {
                     if (reversedCard[ 0 ].props.value === reversedCard[ 1 ].props.value) {
                         board.setState({ gameMessage: "All right!" });
 
-                        board.foundCard = [ reversedCard[ 1 ], reversedCard[ 0 ], ... board.foundCard ];
+                        board.foundCard = [ reversedCard[ 1 ], reversedCard[ 0 ], ... board.foundCard ];                        
+
+                        let winner = board.checkWinner();
 
                         // Reset reversedCards
-                        if (!board.checkWinner()) {
+                        if (!winner) {
                             board.reversedCard = [];
                         }
 
@@ -90,10 +91,10 @@ export default class Board extends React.Component {
                         gamersScores[ board.state.gamerTurn - 1 ]++;
                         
                         // Update gamer score
-                        board.setState({ gamersScores: gamersScores })
+                        board.setState({ gamersScores: gamersScores });
 
                         board.addTimeout(() => {
-                            board.setState({ gameMessage: board.checkWinner() ? "Well done!" : "Click on a card." })
+                            board.setState({ gameMessage: winner ? `Well done gamer ${ winner }!` : "Click on a card." })
                         });
                     } else {
                         // Update gamer turn
