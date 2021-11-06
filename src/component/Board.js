@@ -50,7 +50,12 @@ export default class Board extends React.Component {
             this.state.gamersScores.reduce((acc, current, index, arr) => arr[ acc ] < current ? index : acc, 0) + 1 
                 : null;
 
-    addTimeout = (fn) => { this.timeoutIDs.push(setTimeout(fn, 1000)) }
+    /**
+     * Create timeout and save ids (to be cleaned when reset game)
+     * 
+     * @param {function} fn 
+     */
+    addTimeout = (fn) => { this.timeoutIDs.push(setTimeout(fn, 1000)) };
     
     /**
      *  Handler on update card
@@ -122,8 +127,11 @@ export default class Board extends React.Component {
 
             board.setState({ gameStarted: true });
         });
-    }
+    };
 
+    /**
+     * Create data for new game
+     */
     playGame = () => {
         this.clearAll();
         this.newGame = true;
@@ -135,7 +143,7 @@ export default class Board extends React.Component {
             gamerTurn: 1,
             gamersScores: Array(this.props.nbPlayers).fill(0),
         });
-    }
+    };
     
     /**
      * Renders one card
@@ -146,6 +154,11 @@ export default class Board extends React.Component {
      */
     renderCards = (key, val, ref) => { return <Card ref={ ref } key={ key } id={ key } value={ val } onClickCard={ this.onClickCard.bind(this) } />; }
 
+    /**
+     * Renders component DOM
+     * 
+     * @returns
+     */
     render() {
         const className = ["component-board"];
         const board = this;
