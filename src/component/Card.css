@@ -1,7 +1,6 @@
 .component-card {
     width: 100px;
     height: 100px;
-
     border-radius: 5px;
     cursor: pointer;
     margin: 5px;
@@ -41,7 +40,8 @@
 }
 
 .component-card--back {
-    background-color: #6ac4ff;
+    background-color: #57d1f2;
+    background-image: url(./../../public/images/64512_parrot_icon.png);
 }
 
 .component-card--front {

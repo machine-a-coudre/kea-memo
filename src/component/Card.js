@@ -32,7 +32,12 @@ export default class Card extends React.Component {
     onClick = () => {
         const card = this;
 
-        card.props.onUpdateCard(card)
+        // If card already reversed, don't go further
+        if (!this.state.reversed) {
+            return;
+        }
+
+        card.props.onClickCard(card)
             .then((board) => { card.setState({ reversed: !card.state.reversed }); })
             .catch(() => { /* Not allowed to do something, ignore... */ });
     }

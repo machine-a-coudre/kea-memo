@@ -21,7 +21,7 @@ export default class Board extends React.Component {
      * @param {Card} card 
      * @returns 
      */
-    onUpdateCard = (card) => {
+     onClickCard = (card) => {
         const board = this;
         const cardId = card.props.id;
 
@@ -29,6 +29,8 @@ export default class Board extends React.Component {
 
         return new Promise((resolve, reject) => {
             let reversedCard = board.reversedCard;
+
+            // si la carte n'est pas déjà trouvée
 
             if (reversedCard.length < 2 && !reversedCard.find((_c) => _c.props.id === cardId)) {
                 reversedCard.push(card);
@@ -40,7 +42,9 @@ export default class Board extends React.Component {
                         board.foundCard = [ reversedCard[ 1 ], reversedCard[ 0 ], ... board.foundCard ];
 
                         // Reset reversedCards
-                        board.reversedCard = [];
+                        if (board.foundCard.length < board.cards.length) {
+                            board.reversedCard = [];
+                        }
                     } else {
                         // Not same value, revert cards
                         setTimeout(() => {
@@ -66,7 +70,7 @@ export default class Board extends React.Component {
      * @param {number} val 
      * @returns 
      */
-    renderCards = (key, val, ref) => { return <Card ref={ ref } key={ key } id={ key } value={ val } onUpdateCard={ this.onUpdateCard.bind(this) } />; }
+    renderCards = (key, val, ref) => { return <Card ref={ ref } key={ key } id={ key } value={ val } onClickCard={ this.onClickCard.bind(this) } />; }
 
     render() {
         const className = ["component-board"];
