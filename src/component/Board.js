@@ -105,7 +105,7 @@ export default class Board extends React.Component {
             let random = getRandomArbitrary(0, 100);
 
             if (distinctValue.indexOf(random) === -1) {
-                distinctValue.push(getRandomArbitrary(0, 100));
+                distinctValue.push(random);
                 n++
             }
         }
