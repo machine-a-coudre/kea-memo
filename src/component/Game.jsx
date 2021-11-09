@@ -8,7 +8,7 @@ export default class Game extends React.Component {
             <div className="component-game theme--kea">
                 <div className="component-game--inner" >
                     <h1>Kea Memory</h1>
-                    <Board difficultyLvl={ 2 } nbPlayers={ 2 } game="this" />
+                    <Board difficultyLvl={ 7 } nbPlayers={ 2 } game="this" />
                 </div>
             </div>
         );

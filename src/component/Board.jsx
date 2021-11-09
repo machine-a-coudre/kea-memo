@@ -191,7 +191,7 @@ export default class Board extends React.Component {
             let n = 0;
 
             while (n < board.props.difficultyLvl) {
-                let random = getRandomArbitrary(0, 100);
+                let random = getRandomArbitrary(1, 8);
 
                 if (distinctValue.indexOf(random) === -1) {
                     distinctValue.push(random);

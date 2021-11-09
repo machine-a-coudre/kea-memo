@@ -43,7 +43,7 @@ export default class Card extends React.Component {
     }
 
     render() {
-        const className = ["component-card"];
+        const className = ["component-card", "card-style", "card-style--" + this.props.value];
 
         if (this.state.reversed) {
             className.push("reversed");
@@ -58,7 +58,6 @@ export default class Card extends React.Component {
                 <div className="component-card--inner">
                     <div className="component-card--back"></div>
                     <div className="component-card--front">
-                        <span>{this.props.value}</span>
                     </div>
                 </div>
             </div>

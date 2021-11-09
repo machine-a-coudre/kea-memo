@@ -8,6 +8,44 @@
     .component-card--front {
         //border-radius: 5px;
     }
+
+    .card-style .component-card--front {
+        background-position: center center;
+        background-repeat: no-repeat;
+        background-size: cover;
+    }
+
+    .card-style--1 .component-card--front {
+        background-image: url(./../public/assets/images/theme_kea_birds/chicken_blue.jpg);
+    }
+
+    .card-style--2 .component-card--front {
+        background-image: url(./../public/assets/images/theme_kea_birds/chicken_pink.jpg);
+    }
+
+    .card-style--3 .component-card--front {
+        background-image: url(./../public/assets/images/theme_kea_birds/hummingbird_beige.jpg);
+    }
+
+    .card-style--4 .component-card--front {
+        background-image: url(./../public/assets/images/theme_kea_birds/hummingbird_violet.jpg);
+    }
+
+    .card-style--5 .component-card--front {
+        background-image: url(./../public/assets/images/theme_kea_birds/kea_green.jpg);
+    }
+
+    .card-style--6 .component-card--front {
+        background-image: url(./../public/assets/images/theme_kea_birds/kea_orange.jpg);
+    }
+
+    .card-style--7 .component-card--front {
+        background-image: url(./../public/assets/images/theme_kea_birds/robin_blue.jpg);
+    }
+
+    .card-style--8 .component-card--front {
+        background-image: url(./../public/assets/images/theme_kea_birds/robin_yellow.jpg);
+    }
 }
 
 .theme--kea-rounded {

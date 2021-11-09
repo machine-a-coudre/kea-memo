@@ -3,8 +3,8 @@
 .component-card {
     border-radius: 5px;
     cursor: pointer;
-    height: 100px;
-    width: 100px;
+    height: 150px;
+    width: 150px;
     //height: 20vh;
     margin: 5px;
     position: relative;
@@ -50,7 +50,7 @@
 
 .component-card--back {
     background-color: var(--kea-color-blue);
-    background-image: url(./../../public/assets/images/64512_parrot_icon.png);
+    background-image: url(./../../public/assets/images/kea.svg);
     background-position: center center;
-    background-repeat: no-repeat;
+    /*background-repeat: no-repeat;*/
 }
