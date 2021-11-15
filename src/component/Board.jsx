@@ -16,7 +16,8 @@ export default class Board extends React.Component {
             gameStarted: false, 
             gameMessage: "Start the game: click on a card.",
             gamerTurn: 1,
-            gamersScores: Array(props.nbPlayers).fill(0)
+            gamersScores: Array(props.nbPlayers).fill(0),
+            partyKey: Date.now()
         };
 
         this.reversedCard = [];
@@ -141,7 +142,8 @@ export default class Board extends React.Component {
             gameStarted: false, 
             gameMessage: "Start the game: click on a card.",
             gamerTurn: 1,
-            gamersScores: Array(this.props.nbPlayers).fill(0),
+            gamersScores: Array(this.props.nbPlayers).fill(0),            
+            partyKey: Date.now()
         });
     };
     
@@ -152,7 +154,7 @@ export default class Board extends React.Component {
      * @param {number} val 
      * @returns 
      */
-    renderCards = (key, val, ref) => { return <Card ref={ ref } key={ key } id={ key } value={ val } onClickCard={ this.onClickCard.bind(this) } />; }
+    renderCards = (key, val, ref) => { return <Card ref={ ref } key={ key + this.state.partyKey } id={ key } value={ val } onClickCard={ this.onClickCard.bind(this) } />; }
 
     /**
      * Renders component DOM
