@@ -229,7 +229,10 @@ export default class Board extends React.Component {
                 <div className={ className.join(" ") }>
                     <div>{ cards }</div>
                 </div>                
-                <div className="component-game--status">Player { this.state.gamerTurn } - Score: { this.state.gamersScores[this.state.gamerTurn -1] }</div>
+                <div className="component-game--status">
+                    {/* this.state.gamerTurn */} {/* this.state.gamersScores[this.state.gamerTurn -1] */}
+                    Player 1: { this.state.gamersScores[0] } - Player 2: { this.state.gamersScores[1] }
+                </div>
                 <div>
                     <button className="component-game--btn-playgame" onClick={ this.playGame }>Play again</button>
                 </div>

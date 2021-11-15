@@ -43,6 +43,12 @@
 .component-game--btn-playgame {
     position: relative;
     z-index: 20;
+    border-radius: 5px;
+    border: 1px solid #b9b9b9;
+    padding: 0.8rem 2.9rem;
+    background-color: #fff;
+    font-size: .7rem;
+    box-shadow: 2px 2px 1px #d4d4d4;
 }
 
 @media (max-width: 575.98px) {
