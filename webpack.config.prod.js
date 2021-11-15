@@ -3,7 +3,7 @@ const webpack = require("webpack");
 const path = require("path");
 const { merge } = require("webpack-merge");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
-
+const TerserPlugin = require('terser-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = merge(common, {
@@ -35,7 +35,10 @@ module.exports = merge(common, {
         assetModuleFilename: 'images/[name]-[hash][ext][query]',
     },
     plugins: [
-      new HtmlWebpackPlugin({ template: './public/index.html' }),      
+      new HtmlWebpackPlugin({ template: './public/index.html' }),
+      new TerserPlugin({
+        parallel: true,
+      }),     
       new CleanWebpackPlugin()
     ],
 });
