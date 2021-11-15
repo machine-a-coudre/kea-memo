@@ -52,11 +52,18 @@ export default class Board extends React.Component {
                 : null;
 
     /**
+     * Get the player number turn
+     * 
+     * @returns bool
+     */
+    getPlayerTurn = () => this.state.gamerTurn + 1 > this.props.nbPlayers ? 1 : this.state.gamerTurn + 1
+
+    /**
      * Create timeout and save ids (to be cleaned when reset game)
      * 
      * @param {function} fn 
      */
-    addTimeout = (fn) => { this.timeoutIDs.push(setTimeout(fn, 1000)) };
+    addTimeout = (fn) => { this.timeoutIDs.push(setTimeout(fn, 1500)) };
     
     /**
      *  Handler on update card
@@ -72,6 +79,8 @@ export default class Board extends React.Component {
 
         return new Promise((resolve, reject) => {
             let reversedCard = board.reversedCard;
+            
+            board.setState({ gameMessage: "" });
 
             // si la carte n'est pas déjà trouvée
 
@@ -96,17 +105,17 @@ export default class Board extends React.Component {
                         let gamersScores = board.state.gamersScores;
                         gamersScores[ board.state.gamerTurn - 1 ]++;
                         
-                        // Update gamer score
+                        // Update player score
                         board.setState({ gamersScores: gamersScores });
 
                         board.addTimeout(() => {
-                            board.setState({ gameMessage: winner ? `Well done gamer ${ winner }!` : "Click on a card." })
+                            board.setState({ gameMessage: winner ? `Well done player ${ winner }!` : "" })
                         });
                     } else {
-                        // Update gamer turn
+                        // Update player turn
                         board.setState({ 
-                            gameMessage: "Oh no! Try again...",
-                            gamerTurn: (board.state.gamerTurn + 1 > this.props.nbPlayers) ? 1 : board.state.gamerTurn + 1
+                            gameMessage: `Oh no! Try again... Player ${ board.getPlayerTurn() } your turn.`,
+                            gamerTurn: board.getPlayerTurn()
                         });
 
                         // Not same value, revert cards
@@ -116,7 +125,7 @@ export default class Board extends React.Component {
                             // Reset reversedCards
                             board.reversedCard = [];
 
-                            board.setState({ gameMessage: "Click on a card." });
+                            board.setState({ gameMessage: "" });
                         });
                     }
                 }
@@ -214,11 +223,13 @@ export default class Board extends React.Component {
 
         return (
             <>
+                <div className="component-game--alert">
+                    <div>{ this.state.gameMessage }</div>
+                </div>
                 <div className={ className.join(" ") }>
                     <div>{ cards }</div>
-                </div>
-                <div className="component-game--status">{ this.state.gameMessage }</div>
-                <div>Gamer { this.state.gamerTurn } - Score: { this.state.gamersScores[this.state.gamerTurn -1] }</div>
+                </div>                
+                <div className="component-game--status">Player { this.state.gamerTurn } - Score: { this.state.gamersScores[this.state.gamerTurn -1] }</div>
                 <div>
                     <button className="component-game--btn-playgame" onClick={ this.playGame }>Play again</button>
                 </div>
