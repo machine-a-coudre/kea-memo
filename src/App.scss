@@ -16,7 +16,13 @@ h1, h2, h3, h4, h5 {
 }
 
 h1 {
-    font-size: 4rem;
+    font-size: 3rem;
+}
+
+@media (max-width: 575.98px) {
+    h1 {
+        font-size: 2rem;
+    }
 }
 
 button:hover {
