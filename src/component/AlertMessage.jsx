@@ -21,7 +21,7 @@ export default class AlertMessage extends React.Component {
      * 
      * @returns 
      */
-    componentDidMount = () => this.displayMessage( this.state.messages[0] )
+    componentDidMount = () => this.displayMessage(this.state.messages[0], true)
 
     /**
      * 
@@ -33,14 +33,16 @@ export default class AlertMessage extends React.Component {
      * 
      * @param {*} message 
      */
-    displayMessage = (message) => {
+    displayMessage = (message, fade) => {
         clearInterval(this.timerID);
         this.setState({ show: true, messages: [ message ] });
 
-        this.timerID = setTimeout(
-            () => { this.setState(emptyConf); },
-            this.props.timeout
-        );
+        if (fade) {
+            this.timerID = setTimeout(
+                () => { this.setState(emptyConf); },
+                this.props.timeout
+            );
+        }
     }
 
     /**

@@ -34,13 +34,25 @@ export default class Board extends React.Component {
     componentDidMount = () => this.tick()
 
     /**
-     * 
+     * @returns Promise
      */
     tick = () => {
-        this.timerID = setInterval(
-            () => this.setState({ timer: this.state.timer + 1 }),
-            1000
-        );
+        new Promise((resolve, reject) => {
+            this.timerID = setInterval(
+                () => {
+                    if (this.state.timer === 500) {
+                        clearInterval(this.timerID);
+                        resolve(this.state.timer);
+                    } else {
+                        this.setState({ timer: this.state.timer + 1 });
+                    }
+                },
+                1000
+            );
+        })
+        .then((result) => {
+            this.alertElement.current.displayMessage("Time out!", false);
+        });
     }
 
     /**
@@ -110,7 +122,7 @@ export default class Board extends React.Component {
                     if (reversedCard[ 0 ].props.value === reversedCard[ 1 ].props.value) {
                         let winner = board.checkWinner();
 
-                        board.alertElement.current.displayMessage("All right!");
+                        board.alertElement.current.displayMessage("All right!", true);
                         board.foundCard = [ reversedCard[ 1 ], reversedCard[ 0 ], ... board.foundCard ];
 
                         // Reset reversedCards
@@ -126,7 +138,7 @@ export default class Board extends React.Component {
 
                         if (winner) {
                             board.addTimeout(() => {
-                                board.alertElement.current.displayMessage(`Well done player ${ winner }!`);
+                                board.alertElement.current.displayMessage(`Well done player ${ winner }!`, true);
                             });
                         }
                     } else {
@@ -135,7 +147,7 @@ export default class Board extends React.Component {
                             gamerTurn: board.getPlayerTurn()
                         });
 
-                        board.alertElement.current.displayMessage(`Oh no! Try again... Player ${ board.getPlayerTurn() } your turn.`);
+                        board.alertElement.current.displayMessage(`Oh no! Try again... Player ${ board.getPlayerTurn() } your turn.`, true);
 
                         // Not same value, revert cards
                         board.addTimeout(() => {
@@ -242,7 +254,7 @@ export default class Board extends React.Component {
         return (
             <>
                 <AlertMessage text="Start the game: click on a card." timeout="1000" ref={ this.alertElement } />
-                <div>Timer: { this.state.timer }</div>
+                <div>Timer: { this.state.timer }s</div>
                 <div className={ className.join(" ") }>
                     <div>{ cards }</div>
                 </div>
