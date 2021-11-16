@@ -60,7 +60,7 @@ export default class AlertMessage extends React.Component {
 
         return (
             <div className={ `component-game--alert noselect ${ show && messages.length > 0 ? "show" : "hide" }` }>
-            { messages.map((message, index) => 
+            { messages.map((message, index) =>
                 <div key={ index }>{ message }</div>
             ) }
             </div>

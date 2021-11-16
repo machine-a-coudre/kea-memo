@@ -17,7 +17,8 @@ export default class Board extends React.Component {
             gameStarted: false,
             gamerTurn: 1,
             gamersScores: Array(props.nbPlayers).fill(0),
-            partyKey: Date.now()
+            partyKey: Date.now(),
+            timer: 0
         };
 
         this.alertElement = React.createRef();
@@ -25,6 +26,21 @@ export default class Board extends React.Component {
         this.foundCard = [];
         this.timeoutIDs = [];
         this.newGame = true;
+    }
+
+    /**
+     * 
+     */
+    componentDidMount = () => this.tick()
+
+    /**
+     * 
+     */
+    tick = () => {
+        this.timerID = setInterval(
+            () => this.setState({ timer: this.state.timer + 1 }),
+            1000
+        );
     }
 
     /**
@@ -40,6 +56,8 @@ export default class Board extends React.Component {
         this.timeoutIDs = [];
         this.reversedCard = [];
         this.foundCard = [];
+
+        window.clearInterval(this.timerID);
 
         if (this.alertElement.current) {
             this.alertElement.current.clearMessages();
@@ -150,8 +168,10 @@ export default class Board extends React.Component {
             gameStarted: false,
             gamerTurn: 1,
             gamersScores: Array(this.props.nbPlayers).fill(0),            
-            partyKey: Date.now()
+            partyKey: Date.now(),
+            timer: 0
         });
+        this.tick();
     };
     
     /**
@@ -222,6 +242,7 @@ export default class Board extends React.Component {
         return (
             <>
                 <AlertMessage text="Start the game: click on a card." timeout="1000" ref={ this.alertElement } />
+                <div>Timer: { this.state.timer }</div>
                 <div className={ className.join(" ") }>
                     <div>{ cards }</div>
                 </div>
