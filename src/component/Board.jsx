@@ -1,4 +1,5 @@
 import React from "react";
+import AlertMessage from "./AlertMessage";
 import Card from "./Card";
 import "./Board.scss";
 
@@ -13,13 +14,13 @@ export default class Board extends React.Component {
         this.state = { 
             cards: [], 
             distinctValue: [], 
-            gameStarted: false, 
-            gameMessage: "Start the game: click on a card.",
+            gameStarted: false,
             gamerTurn: 1,
             gamersScores: Array(props.nbPlayers).fill(0),
             partyKey: Date.now()
         };
 
+        this.alertElement = React.createRef();
         this.reversedCard = [];
         this.foundCard = [];
         this.timeoutIDs = [];
@@ -39,6 +40,10 @@ export default class Board extends React.Component {
         this.timeoutIDs = [];
         this.reversedCard = [];
         this.foundCard = [];
+
+        if (this.alertElement.current) {
+            this.alertElement.current.clearMessages();
+        }
     }
 
     /**
@@ -75,14 +80,8 @@ export default class Board extends React.Component {
         const board = this;
         const cardId = card.props.id;
 
-        //React.children
-
         return new Promise((resolve, reject) => {
             let reversedCard = board.reversedCard;
-            
-            board.setState({ gameMessage: "" });
-
-            // si la carte n'est pas déjà trouvée
 
             if (reversedCard.length < 2 && !reversedCard.find((_c) => _c.props.id === cardId)) {
                 reversedCard.push(card);
@@ -91,11 +90,10 @@ export default class Board extends React.Component {
                 if (reversedCard.length === 2) {
                     // Is same value ? validate
                     if (reversedCard[ 0 ].props.value === reversedCard[ 1 ].props.value) {
-                        board.setState({ gameMessage: "All right!" });
-
-                        board.foundCard = [ reversedCard[ 1 ], reversedCard[ 0 ], ... board.foundCard ];                        
-
                         let winner = board.checkWinner();
+
+                        board.alertElement.current.displayMessage("All right!");
+                        board.foundCard = [ reversedCard[ 1 ], reversedCard[ 0 ], ... board.foundCard ];
 
                         // Reset reversedCards
                         if (!winner) {
@@ -108,15 +106,18 @@ export default class Board extends React.Component {
                         // Update player score
                         board.setState({ gamersScores: gamersScores });
 
-                        board.addTimeout(() => {
-                            board.setState({ gameMessage: winner ? `Well done player ${ winner }!` : "" })
-                        });
+                        if (winner) {
+                            board.addTimeout(() => {
+                                board.alertElement.current.displayMessage(`Well done player ${ winner }!`);
+                            });
+                        }
                     } else {
                         // Update player turn
-                        board.setState({ 
-                            gameMessage: `Oh no! Try again... Player ${ board.getPlayerTurn() } your turn.`,
+                        board.setState({
                             gamerTurn: board.getPlayerTurn()
                         });
+
+                        board.alertElement.current.displayMessage(`Oh no! Try again... Player ${ board.getPlayerTurn() } your turn.`);
 
                         // Not same value, revert cards
                         board.addTimeout(() => {
@@ -124,8 +125,6 @@ export default class Board extends React.Component {
 
                             // Reset reversedCards
                             board.reversedCard = [];
-
-                            board.setState({ gameMessage: "" });
                         });
                     }
                 }
@@ -148,8 +147,7 @@ export default class Board extends React.Component {
         this.setState({ 
             cards: [], 
             distinctValue: [], 
-            gameStarted: false, 
-            gameMessage: "Start the game: click on a card.",
+            gameStarted: false,
             gamerTurn: 1,
             gamersScores: Array(this.props.nbPlayers).fill(0),            
             partyKey: Date.now()
@@ -202,7 +200,7 @@ export default class Board extends React.Component {
             let n = 0;
 
             while (n < board.props.difficultyLvl) {
-                let random = getRandomArbitrary(1, 8);
+                let random = getRandomArbitrary(1, 13);
 
                 if (distinctValue.indexOf(random) === -1) {
                     distinctValue.push(random);
@@ -223,12 +221,10 @@ export default class Board extends React.Component {
 
         return (
             <>
-                <div className="component-game--alert">
-                    <div>{ this.state.gameMessage }</div>
-                </div>
+                <AlertMessage text="Start the game: click on a card." timeout="1000" ref={ this.alertElement } />
                 <div className={ className.join(" ") }>
                     <div>{ cards }</div>
-                </div>                
+                </div>
                 <div className="component-game--status">
                     {/* this.state.gamerTurn */} {/* this.state.gamersScores[this.state.gamerTurn -1] */}
                     Player 1: { this.state.gamersScores[0] } - Player 2: { this.state.gamersScores[1] }
