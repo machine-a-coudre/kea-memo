@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "Famous Memory game made with ReactJS",
   "main": "index.js",
+  "private": true,
   "scripts": {
     "start": "webpack-dev-server --config webpack.config.dev.js --open --node-env=development",
     "build": "webpack --config webpack.config.prod.js --node-env=production"

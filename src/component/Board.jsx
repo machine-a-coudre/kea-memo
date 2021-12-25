@@ -31,7 +31,27 @@ export default class Board extends React.Component {
     /**
      * 
      */
-    componentDidMount = () => this.tick()
+    componentDidMount = () => {
+        this.preloadImages();
+        this.tick();
+    }
+
+    /**
+     * Credits to:
+     * https://jack72828383883.medium.com/how-to-preload-images-into-cache-in-react-js-ff1642708240
+     */
+    preloadImages = () => {
+        const promises = [
+            "./images/magpie_yellow.jpg"
+        ].map((src) => new Promise((resolve, reject) => {
+            const img = new Image();
+            img.src = src;
+            img.onload = resolve();
+            img.onerror = reject();
+        }));
+        
+        Promise.all(promises);
+    }
 
     /**
      * @returns Promise
@@ -40,7 +60,7 @@ export default class Board extends React.Component {
         new Promise((resolve, reject) => {
             this.timerID = setInterval(
                 () => {
-                    if (this.state.timer === 500) {
+                    if (this.state.timer === this.props.timerMax) {
                         clearInterval(this.timerID);
                         resolve(this.state.timer);
                     } else {
@@ -147,7 +167,7 @@ export default class Board extends React.Component {
                             gamerTurn: board.getPlayerTurn()
                         });
 
-                        board.alertElement.current.displayMessage(`Oh no! Try again... Player ${ board.getPlayerTurn() } your turn.`, true);
+                        board.alertElement.current.displayMessage(`Oh no! Try again... Player ${ board.getPlayerTurn() } your turn.`, true, 2000);
 
                         // Not same value, revert cards
                         board.addTimeout(() => {
@@ -259,8 +279,7 @@ export default class Board extends React.Component {
                     <div>{ cards }</div>
                 </div>
                 <div className="component-game--status">
-                    {/* this.state.gamerTurn */} {/* this.state.gamersScores[this.state.gamerTurn -1] */}
-                    Player 1: { this.state.gamersScores[0] } - Player 2: { this.state.gamersScores[1] }
+                    <span className={ this.state.gamerTurn === 1 ? "bold" : "" }>Player 1:</span> { this.state.gamersScores[0] } - <span className={ this.state.gamerTurn === 2 ? "bold" : "" }>Player 2:</span> { this.state.gamersScores[1] }
                 </div>
                 <div>
                     <button className="component-game--btn-playgame" onClick={ this.playGame }>Play again</button>

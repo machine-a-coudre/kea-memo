@@ -31,7 +31,8 @@ module.exports = merge(common, {
     output: {
         path: path.resolve(__dirname, "dist"),
         publicPath: "/",
-        filename: "[name].bundle.js"
+        filename: "[name].bundle.js",
+        assetModuleFilename: 'images/[name][ext][query]',
     },
     devServer: {
         historyApiFallback: true,
